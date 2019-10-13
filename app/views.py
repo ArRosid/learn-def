@@ -5,4 +5,5 @@ from rest_framework.response import Response
 
 @api_view(["GET"])
 def home(request):
-    return Response({"message":"Welcome Home!"}, status=status.HTTP_200_OK)
+    return Response({"message":"Welcome Home!"},
+                    status=status.HTTP_200_OK)
