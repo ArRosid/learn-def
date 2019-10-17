@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,7 +13,7 @@ def home(request):
     return Response({"message":"Welcome Home!"},
                     status=status.HTTP_200_OK)
 
-class ArticleListCreateAPIView(APIView):
+# class ArticleListCreateAPIView(APIView):
     
     def get(self, request):
         articles = models.Article.objects.all()
@@ -26,7 +27,7 @@ class ArticleListCreateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ArticleDetailAPIView(APIView):
+# class ArticleDetailAPIView(APIView):
     
     def get(self, request, pk):
         article = models.Article.objects.get(id=pk)
@@ -45,3 +46,11 @@ class ArticleDetailAPIView(APIView):
         article = models.Article.objects.get(id=pk)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ArticleListCreateView(generics.ListCreateAPIView):
+    queryset = models.Article.objects.all()
+    serializer_class = serializers.ArticleSerializer
+
+class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Article.objects.all()
+    serializer_class = serializers.ArticleSerializer
