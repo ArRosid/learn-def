@@ -5,6 +5,11 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+
+from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authtoken.models import Token
 
 from . import models
 from . import serializers
@@ -59,3 +64,4 @@ from . import serializers
 class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ArticleSerializer
     queryset = models.Article.objects.all()
+    permission_classes = [IsAuthenticated,]
