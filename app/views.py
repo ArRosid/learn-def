@@ -85,4 +85,4 @@ def login(request):
 class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ArticleSerializer
     queryset = models.Article.objects.all()
-    permission_classes = [IsAuthenticatedOrReadOnly,]
+    permission_classes = [IsAdminUser,]
