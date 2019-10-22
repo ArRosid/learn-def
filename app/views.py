@@ -5,7 +5,9 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import (IsAuthenticated,
+                                        IsAdminUser,
+                                        IsAuthenticatedOrReadOnly)
 
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
@@ -83,4 +85,4 @@ def login(request):
 class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ArticleSerializer
     queryset = models.Article.objects.all()
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticatedOrReadOnly,]
