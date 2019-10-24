@@ -15,6 +15,7 @@ from rest_framework.authtoken.models import Token
 
 from . import models
 from . import serializers
+from .permissions import IsOwnArticleOrReadOnly
 
 # @api_view(["GET"])
 # def home(request):
@@ -85,4 +86,4 @@ def login(request):
 class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ArticleSerializer
     queryset = models.Article.objects.all()
-    permission_classes = [IsAdminUser,]
+    permission_classes = [IsAuthenticated, IsOwnArticleOrReadOnly]
